@@ -126,12 +126,10 @@ _______
     - longitude  (8 B)
     - publishedAt (8 B)
 
-
     VoyagerSubsription (24 B)
     - id (8 B)
     - voyagerId (8 B)
     - followerId (8 B)
-
 
     VoyagerMediaPostReaction (20 B)
     - id (8 B)
@@ -170,9 +168,12 @@ _______
     Комментарии
         - write: 750 RPS * 420 B = 750 * 0.5 * 10^3 = 375 kB/s
         - read: 750 RPS * 420 B * 50 ком. на странице = ~20 MB/s
-        
     Лента
         если [RPS ленты / RPS постов = 4 500 / 50 = ~ 100] тогда) 
         - read (сообщения): 60 kB/s * 100 = 6 MB/s
         - read (медиа): 500 MB/s * 100 = 50 GB/s 
 ```
+
+# Готовим карту
+
+API социальной сети путешественников: [API v1](api/openapi_v1.yaml)
