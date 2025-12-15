@@ -14,7 +14,7 @@ tags:
   - name: posts/feed
   - name: posts/reactions
   - name: posts/comments
-  - name: posts/assets
+  - name: assets
   - name: subsrciptions
 
 
@@ -46,7 +46,7 @@ paths:
       tags:
         - posts
       summary: Load Voyager Media Post with caption and refs to media files
-      description: Method loads Voyger Media Post with caption and refs to media files by ID
+      description: Method loads Voyager Media Post with caption and refs to media files by ID
       parameters:
         - name: id
           in: path
@@ -71,20 +71,20 @@ paths:
     post:
       tags:
         - subsrciptions
-      summary: Subsribe current user to Voyager as follower
-      description: Method subsribes to Voyager as follower
+      summary: Subscribe current user to Voyager as follower
+      description: Method subscribes to Voyager as follower
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/VoyagerSubsription'
+              $ref: '#/components/schemas/VoyagerSubscription'
       responses:
         '200':
           description: Ok
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/VoyagerSubsription'
+                $ref: '#/components/schemas/VoyagerSubscription'
         '400':
           description: Bad Request
         '500':
@@ -94,12 +94,12 @@ paths:
     delete:
       tags:
         - subsrciptions
-      summary: UNsubsribe from Voyager
-      description: Method UNsubsribes from Voyager
+      summary: Unsubscribe from Voyager
+      description: Method Unsubscribes from Voyager
       parameters:
         - name: id
           in: path
-          description: ID of subsrciption
+          description: ID of subscription
           required: true
           schema:
             type: integer
@@ -127,6 +127,13 @@ paths:
           schema:
             type: integer
             format: int64
+        - name: page
+          in: query
+          description: Pagination parameter to load feed in chunks
+          required: false
+          schema:
+            type: integer
+            format: int32
       responses:
         '200':
           description: Ok
@@ -267,12 +274,12 @@ paths:
         '500':
           description: Server error
 
-  /voyagers/v1/posts/assets:
+  /voyagers/v1/assets:
     post:
       tags:
-        - posts/assets
-      summary: Upload post asset
-      description: Method uploads an asset for Voyager Media Post before saving the post
+        - assets
+      summary: Upload generic assets
+      description: Method uploads generic asset
       requestBody:
         content:
           application/octet-stream:
@@ -293,12 +300,12 @@ paths:
         '500':
           description: Server error
 
-  /voyagers/v1/posts/assets/{id}:
+  /voyagers/v1/assets/{id}:
     get:
       tags:
-        - posts/assets
-      summary: Load post asset
-      description: Method load Voyager Media Post asset by ID
+        - assets
+      summary: Load generic asset
+      description: Method loads generic asset by ID
       parameters:
         - name: id
           in: path
@@ -359,7 +366,7 @@ components:
           format: int64
           examples: [1678886400000]
 
-    VoyagerSubsription:
+    VoyagerSubscription:
       type: object
       properties:
         id:
@@ -386,7 +393,7 @@ components:
           type: integer
           format: int64
           examples: [101]
-        postid:
+        postId:
           type: integer
           format: int64
           examples: [123323]
@@ -409,7 +416,7 @@ components:
     VoyagerMediaPostReactionSummary:
       type: object
       properties:
-        postid:
+        postId:
           type: integer
           format: int64
           examples: [123323]
@@ -426,7 +433,7 @@ components:
           type: integer
           format: int64
           examples: [101]
-        postid:
+        postId:
           type: integer
           format: int64
           examples: [123323]
