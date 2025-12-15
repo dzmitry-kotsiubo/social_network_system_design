@@ -67,10 +67,10 @@ paths:
         '500':
           description: Server error
 
-  /voyagers/v1/subsrciptions:
+  /voyagers/v1/subscriptions:
     post:
       tags:
-        - subsrciptions
+        - subscriptions
       summary: Subscribe current user to Voyager as follower
       description: Method subscribes to Voyager as follower
       requestBody:
@@ -90,7 +90,7 @@ paths:
         '500':
           description: Server error
 
-  /voyagers/v1/subsrciptions/{id}:
+  /voyagers/v1/subscriptions/{id}:
     delete:
       tags:
         - subsrciptions
