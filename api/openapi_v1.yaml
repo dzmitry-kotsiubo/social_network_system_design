@@ -1,0 +1,446 @@
+openapi: 3.1.0
+info:
+  title: Voyagers Social Network - OpenAPI 3.1
+  description: |-
+    API for Voyagers Social Network.
+  version: 0.1.0
+
+externalDocs:
+  description: Find out more about Voyagers Social Network initiative
+  url: https://github.com/dzmitry-kotsiubo/social_network_system_design
+
+tags:
+  - name: posts
+  - name: posts/feed
+  - name: posts/reactions
+  - name: posts/comments
+  - name: assets
+  - name: subsrciptions
+
+
+paths:
+  /voyagers/v1/posts:
+    post:
+      tags:
+        - posts
+      summary: Publish Voyger Media Post with caption and refs to media files
+      description: Method publishes Voyger Media Post with caption and refs to media files
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VoyagerMediaPost'
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VoyagerMediaPost'
+        '400':
+          description: Bad Request
+        '500':
+          description: Server error
+  /voyagers/v1/posts/{id}:
+    get:
+      tags:
+        - posts
+      summary: Load Voyager Media Post with caption and refs to media files
+      description: Method loads Voyager Media Post with caption and refs to media files by ID
+      parameters:
+        - name: id
+          in: path
+          description: ID of Voyager Media Post
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VoyagerMediaPost'
+        '400':
+          description: Bad Request
+        '500':
+          description: Server error
+
+  /voyagers/v1/subsrciptions:
+    post:
+      tags:
+        - subsrciptions
+      summary: Subscribe current user to Voyager as follower
+      description: Method subscribes to Voyager as follower
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VoyagerSubscription'
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VoyagerSubscription'
+        '400':
+          description: Bad Request
+        '500':
+          description: Server error
+
+  /voyagers/v1/subsrciptions/{id}:
+    delete:
+      tags:
+        - subsrciptions
+      summary: Unsubscribe from Voyager
+      description: Method Unsubscribes from Voyager
+      parameters:
+        - name: id
+          in: path
+          description: ID of subscription
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Ok
+        '400':
+          description: Bad Request
+        '500':
+          description: Server error
+
+
+  /voyagers/v1/posts/feed/{voyager_id}:
+    get:
+      tags:
+        - posts/feed
+      summary: Retrieve the list of posts feed for specific Voyager
+      description: Method retrieves the list of posts feed for specific Voyager
+      parameters:
+        - name: voyager_id
+          in: path
+          description: ID of Voyager which post feed should be retrieved
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: page
+          in: query
+          description: Pagination parameter to load feed in chunks
+          required: false
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/VoyagerMediaPost'
+        '400':
+          description: Bad Request
+        '500':
+          description: Server error
+
+  /voyagers/v1/posts/{id}/reactions:
+    post:
+      tags:
+        - posts/reactions
+      summary: Add reaction to Voyager Media Post
+      description: Method adds reaction to Voyager Media Post
+      parameters:
+        - name: id
+          in: path
+          description: ID of Voyager Media Post
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VoyagerMediaPostReaction'
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VoyagerMediaPostReaction'
+        '400':
+          description: Bad Request
+        '500':
+          description: Server error
+
+  /voyagers/v1/posts/{id}/reactions/summary:
+    get:
+      tags:
+        - posts/reactions
+      summary: Get reactions summary related to Voyager Media Post
+      description: Method gets reactions summary related to Voyager Media Post
+      parameters:
+        - name: id
+          in: path
+          description: ID of Voyager Media Post
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/VoyagerMediaPostReactionSummary'
+        '400':
+          description: Bad Request
+        '500':
+          description: Server error
+
+
+
+  /voyagers/v1/posts/{id}/comments:
+    post:
+      tags:
+        - posts/comments
+      summary: Add comment to Voyager Media Post
+      description: Method adds comment to Voyager Media Post
+      parameters:
+        - name: id
+          in: path
+          description: ID of Voyager Media Post
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VoyagerMediaPostComment'
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VoyagerMediaPostComment'
+        '400':
+          description: Bad Request
+        '500':
+          description: Server error
+    get:
+      tags:
+        - posts/comments
+      summary: Get list of comments related to Voyager Media Post
+      description: Method gets lists of comments related to Voyager Media Post
+      parameters:
+        - name: id
+          in: path
+          description: ID of Voyager Media Post
+          required: true
+          schema:
+            type: integer
+            format: int64
+
+        - name: page
+          in: query
+          description: Pagination parameter to load comments in chunks
+          required: false
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/VoyagerMediaPostComment'
+        '400':
+          description: Bad Request
+        '500':
+          description: Server error
+
+  /voyagers/v1/assets:
+    post:
+      tags:
+        - assets
+      summary: Upload generic assets
+      description: Method uploads generic asset
+      requestBody:
+        content:
+          application/octet-stream:
+            schema:
+              type: string
+              format: binary
+
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                type: string
+                examples: ["abcd1234"]
+        '400':
+          description: Bad Request
+        '500':
+          description: Server error
+
+  /voyagers/v1/assets/{id}:
+    get:
+      tags:
+        - assets
+      summary: Load generic asset
+      description: Method loads generic asset by ID
+      parameters:
+        - name: id
+          in: path
+          description: ID of asset
+          required: true
+          schema:
+            type: string
+            examples: ["abcd1234"]
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+        '400':
+          description: Bad Request
+        '500':
+          description: Server error
+
+
+components:
+  schemas:
+    VoyagerMediaPost:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          examples: [101]
+        voyagerId:
+          type: integer
+          format: int64
+          examples: [101]
+        caption:
+          type: string
+          examples: ["A short description to add context to images of media post"]
+        imageIds:
+          type: array
+          items:
+            type:
+              string
+          examples:
+            - ["abcd1234"]
+        latitude:
+          type: number
+          format: double
+          examples: [34.0522]
+
+        longitude:
+          type: number
+          format: double
+          examples: [-118.2437]
+
+        publishedAt:
+          type: integer
+          format: int64
+          examples: [1678886400000]
+
+    VoyagerSubscription:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          examples: [101]
+        voyagerId:
+          type: integer
+          format: int64
+          examples: [101]
+        followerId:
+          type: number
+          format: int64
+          examples: [309]
+
+    VoyagerMediaPostReactionEnum:
+      type: string
+      enum: [Like, Love, Curious, Celebrate, Insightful]
+
+    VoyagerMediaPostReaction:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          examples: [101]
+        postId:
+          type: integer
+          format: int64
+          examples: [123323]
+        followerId:
+          type: number
+          format: int64
+          examples: [309]
+        reaction:
+          $ref: '#/components/schemas/VoyagerMediaPostReactionEnum'
+
+    VoyagerMediaPostReactionSummaryItem:
+      type: object
+      properties:
+        reaction:
+          $ref: '#/components/schemas/VoyagerMediaPostReactionEnum'
+        count:
+          type: number
+          format: int32
+
+    VoyagerMediaPostReactionSummary:
+      type: object
+      properties:
+        postId:
+          type: integer
+          format: int64
+          examples: [123323]
+        reactions:
+          type: array
+          items:
+            $ref: '#/components/schemas/VoyagerMediaPostReactionSummaryItem'
+
+
+    VoyagerMediaPostComment:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          examples: [101]
+        postId:
+          type: integer
+          format: int64
+          examples: [123323]
+        followerId:
+          type: number
+          format: int64
+          examples: [309]
+        comment:
+          type: string
+          examples: ["free-form text comment for media post"]
