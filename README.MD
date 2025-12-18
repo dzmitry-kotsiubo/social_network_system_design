@@ -208,7 +208,7 @@ Disks_for_throughput = 60 kB/s / 100 МБ/с = 1
 Disks_for_iops = 800 / 100 = 8
 Disks = max(6, 1, 8) = 8 
 
-HDD (1 TB) = 8 дисков или SSD (3 TB) = 1 диск
+SSD (3 TB) = 1 диск
 ```
 
 #### медиа
@@ -250,7 +250,7 @@ Disks_for_throughput = 30 kB/s / 100 МБ/с = 1
 Disks_for_iops = 2250 / 100 = 23
 Disks = max(1, 1, 23) = 23
 
-HDD (2 TB) = 23 диска или SSD (2 TB) = 3 диска
+SSD (2 TB) = 3 диска
 ```
 
 ### Комментарии
@@ -264,7 +264,7 @@ Disks_for_throughput = 375 kB/s / 100 МБ/с = 1
 Disks_for_iops = 1 500 / 100 = 15
 Disks = max(1, 1, 15) = 15
 
-HDD (24 TB) = 15 дисков или SSD (10 TB) = 2 диска
+SSD (10 TB) = 2 диска
 ```
 
 ### Лента
