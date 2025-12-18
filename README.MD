@@ -203,12 +203,17 @@ RPS = 50 + 750 = 800
 Throughput = 60 kB/s
 
 Capacity = 60 kB/s * 10^5 * 400 = 2,4 * 10^9 kB/s = 2,4 TB
-Disks_for_capacity = 2.4 ТБ / 0.5 ТБ = 6
+Disks_for_capacity = 2.4 ТБ / 3 ТБ = 1
 Disks_for_throughput = 60 kB/s / 100 МБ/с = 1
-Disks_for_iops = 800 / 100 = 8
-Disks = max(6, 1, 8) = 8 
+Disks_for_iops = 800 / 1000 = 1
+Disks = max(1, 1, 1) = 1
 
 SSD (3 TB) = 1 диск
+
+Hosts: 
+ - 1 disk by host * (RF = 2) = 2 hosts
+
+ 
 ```
 
 #### медиа
@@ -223,6 +228,8 @@ Disks_for_iops = 8000 / 1000 = 8
 Disks = max(200, 5, 8) = 200
 
 SSD (100 TB) = 200 дисков
+
+Optimal approach is to use cloud S3 storage services
 ```
 
 ### Подписки 
@@ -237,6 +244,9 @@ Disks_for_iops = 5 / 100 = 1
 Disks = max(1, 1, 1) = 1
 
 HDD (8 GB) = 1 диск
+
+Hosts: 
+ - 1 disk by host * (RF = 2) = 2 hosts
 ```
 
 ### Реакции
@@ -246,11 +256,15 @@ Throughput = 30 kB/s
 
 Capacity = 30 kB/s * 10^5 * 400 = 1.2 * 10^9 kB/s = 1.2 TB
 Disks_for_capacity = 1.2 TB / 2 TБ = 1
-Disks_for_throughput = 30 kB/s / 100 МБ/с = 1
-Disks_for_iops = 2250 / 100 = 23
-Disks = max(1, 1, 23) = 23
+Disks_for_throughput = 30 kB/s / 500 МБ/с = 1
+Disks_for_iops = 2250 / 1000 = 3
+Disks = max(1, 1, 3) = 3
 
-SSD (2 TB) = 3 диска
+SSD (1 TB) = 3 диска
+
+Hosts: 
+ - 3 disk by host * (RF = 2) = 2 hosts
+
 ```
 
 ### Комментарии
@@ -260,11 +274,15 @@ Throughput = 375 kB/s
 
 Capacity = 375 kB/s * 10^5 * 400 = 16 * 10^9 kB/s = 16 TB
 Disks_for_capacity = 16 TB / 24 TБ = 1
-Disks_for_throughput = 375 kB/s / 100 МБ/с = 1
-Disks_for_iops = 1 500 / 100 = 15
-Disks = max(1, 1, 15) = 15
+Disks_for_throughput = 375 kB/s / 500 МБ/с = 1
+Disks_for_iops = 1 500 / 1000 = 2
+Disks = max(1, 1, 2) = 2
 
 SSD (10 TB) = 2 диска
+
+Hosts: 
+ - 2 disk by host * (RF = 2) = 2 hosts
+
 ```
 
 ### Лента
@@ -278,5 +296,8 @@ Disks_for_throughput = 6 MB/s / 500 МБ/с = 1
 Disks_for_iops = 4 500 / 1000 = 5
 Disks = max(3, 1, 5) = 5
 
-SSD (100 TB) = 5 дисков
+SSD (60 TB) = 5 дисков
+
+Hosts: 
+ - 5 disk by host * (RF = 2) = 2 hosts
 ```

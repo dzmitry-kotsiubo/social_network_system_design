@@ -1,3 +1,8 @@
+// PostgreSQL
+// Replication:
+// - master-slave (one sync)
+// - replication factor 2
+//
 enum VoyagerMediaPostReactionsType {
   Like, Love, Curious, Celebrate, Insightful
 }

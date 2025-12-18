@@ -1,3 +1,8 @@
+// PostgreSQL
+// Replication:
+// - master-slave (one sync)
+// - replication factor 2
+//
 Table voyager_subscriptions {
   id bigint [pk]
   voyager_id bigint [not null]
