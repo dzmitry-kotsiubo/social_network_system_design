@@ -230,6 +230,9 @@ Disks = max(200, 5, 8) = 200
 SSD (100 TB) = 200 дисков
 
 Optimal approach is to use cloud S3 storage services
+
+Hosts: 
+ - 4 disks by host * (RF = 2) = 200 / 4 * 2 = 100 hosts
 ```
 
 ### Подписки 
@@ -263,7 +266,7 @@ Disks = max(1, 1, 3) = 3
 SSD (1 TB) = 3 диска
 
 Hosts: 
- - 3 disk by host * (RF = 2) = 2 hosts
+ - 3 disks by host * (RF = 2) = 2 hosts
 
 ```
 
@@ -281,7 +284,7 @@ Disks = max(1, 1, 2) = 2
 SSD (10 TB) = 2 диска
 
 Hosts: 
- - 2 disk by host * (RF = 2) = 2 hosts
+ - 2 disks by host * (RF = 2) = 2 hosts
 
 ```
 
@@ -299,5 +302,5 @@ Disks = max(3, 1, 5) = 5
 SSD (60 TB) = 5 дисков
 
 Hosts: 
- - 5 disk by host * (RF = 2) = 2 hosts
+ - 5 disks by hosts * (RF = 2) = 2 hosts
 ```
