@@ -1,0 +1,19 @@
+@startuml voyager_social_network_c4_context
+!include <C4/C4_Container>
+
+Person(user, "Voyager")
+Container(apiGateway, "API Gateway", "Nginx", "Entry Point to the System")
+
+
+System_Boundary(commentsSystem, "Comments subsystem") {
+    Container(commentsSrv, "Comments Service", "MicroService", "Manages comments")
+    ContainerDb(commentsDBMaster, "Comments\nDB Master", "PG", "")
+    ContainerDb(commentsDBSlave, "Comments\nDB Slave", "PG", "")
+}
+
+Rel(user, apiGateway, "Manage user requests", "REST")
+Rel(apiGateway, commentsSrv, "Add comment\nView post comments", "REST")
+Rel(commentsSrv, commentsDBMaster, "write path", "")
+Rel(commentsSrv, commentsDBSlave, "read path", "")
+Rel(commentsDBMaster, commentsDBSlave, "repliacation path", "")
+@enduml

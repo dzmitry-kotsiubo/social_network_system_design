@@ -1,0 +1,23 @@
+@startuml voyager_social_network_c4_context
+!include <C4/C4_Container>
+
+Person(user, "Voyager")
+Container(apiGateway, "API Gateway", "Nginx", "Entry Point to the System")
+ContainerQueue(postsCDC, "Posts CDC", "Kafka", "")
+Container(postsSrv, "Posts Service", "MicroService", "Manages posts")
+Container(subscriptionsSrv, "Subscriptions Service", "MicroService", "Manages subsctiptions")
+
+
+System_Boundary(feedsSystem, "Feeds subsystem") {
+    Container(feedsSrv, "Feeds Service", "MicroService", "Builds and serves post feeds")
+    ContainerDb(feedsTopics, "Feeds Topics", "Redis Cluster", "")
+}
+
+Rel(user, apiGateway, "Subscribe to posts feed", "WS")
+Rel(apiGateway, feedsSrv, "Subscribe to posts feed", "WS")
+
+Rel(postsSrv, postsCDC, "posts cdc", "")
+Rel(feedsSrv, postsCDC, "1 read new posts", "")
+Rel(feedsSrv, subscriptionsSrv, "2 get subs list", "")
+Rel(feedsSrv, feedsTopics, "3 update feed topics", "")
+@enduml

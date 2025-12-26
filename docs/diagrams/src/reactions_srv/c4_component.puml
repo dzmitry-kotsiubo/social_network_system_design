@@ -1,0 +1,20 @@
+@startuml voyager_social_network_c4_context
+!include <C4/C4_Container>
+
+Person(user, "Voyager")
+Container(apiGateway, "API Gateway", "Nginx", "Entry Point to the System")
+
+
+System_Boundary(reactionsSystem, "Reactions subsystem") {
+    Container(reactionsSrv, "Reactions Service", "MicroService")
+    ContainerDb(reactionsDBMaster, "Reactions\nDB Master", "PG", "")
+    ContainerDb(reactionsDBSlave, "Reactions\nDB Slave", "PG", "")
+}
+
+Rel(user, apiGateway, "Manage user requests", "REST")
+Rel(apiGateway, reactionsSrv, "Add reaction\nView post reaction summary", "REST")
+Rel(reactionsSrv, reactionsDBMaster, "write path", "")
+Rel(reactionsSrv, reactionsDBSlave, "read path", "")
+Rel(reactionsDBMaster, reactionsDBSlave, "repliacation path", "")
+
+@enduml

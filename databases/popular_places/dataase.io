@@ -1,15 +1,20 @@
-// PostgreSQL
+// Redis
 // Replication:
-// - master-slave (one sync)
-// - replication factor 2
+// - master-slave (2 async slaves)
+// - replication factor 3
 //
-Table popular_places {
-  id bigint [pk]
-  location geography [not null] // postgis
-  as_of_date date [not null]
-  rating integer [not null]
+Table place {
+  place_id string
+  place_id_provider string
+  place_name string
+}
 
-  index {
-    location [type: gist]
-  }
+Table places_leaderboard {
+  geohash string [pk]
+  places list[place]  
+}
+
+Table posts_leaderboard {
+  geohash string [pk]
+  post_id_list list[int]  
 }

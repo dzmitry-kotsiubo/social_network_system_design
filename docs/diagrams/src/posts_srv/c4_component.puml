@@ -1,0 +1,25 @@
+@startuml voyager_social_network_c4_context
+!include <C4/C4_Container>
+
+Person(user, "Voyager")
+Container(apiGateway, "API Gateway", "Nginx", "Entry Point to the System")
+Container(feedsSrv, "Feeds Service", "MicroService", "Manages Post Feeds")
+
+
+System_Boundary(postSystem, "Posts subsystem") {
+    Container(postsSrv, "Post Service", "MicroService", "Manages posts")
+    ContainerDb(postsDBMaster, "Post DB Master", "PG", "")
+    ContainerDb(postsDBSlave, "Post DB Slave", "PG", "")
+    ContainerQueue(postsCDC, "Posts CDC", "Kafka", "")
+}
+
+Rel(user, apiGateway, "Manage user requests", "REST")
+Rel(apiGateway, postsSrv, "Create/View\nsingle post", "REST")
+Rel(postsSrv, postsDBMaster, "write path", "")
+Rel(postsSrv, postsDBSlave, "read path", "")
+Rel(postsDBMaster, postsDBSlave, "repliacation path", "")
+
+Rel(postsCDC, postsDBSlave, "cdc path", "")
+Rel(feedsSrv, postsCDC, "read feed", "")
+
+@enduml

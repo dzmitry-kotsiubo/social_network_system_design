@@ -15,42 +15,43 @@ tags:
   - name: posts/reactions
   - name: posts/comments
   - name: assets
-  - name: subsrciptions
+  - name: subscriptions
+  - name: popular_places
 
 
 paths:
-  /voyagers/v1/posts:
+  /v1/voyagers/posts:
     post:
       tags:
         - posts
-      summary: Publish Voyger Media Post with caption and refs to media files
-      description: Method publishes Voyger Media Post with caption and refs to media files
+      summary: Publish Voyger Post with caption and refs to media files
+      description: Method publishes Voyger Post with caption and refs to media files
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/VoyagerMediaPost'
+              $ref: '#/components/schemas/VoyagerPost'
       responses:
         '200':
           description: Ok
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/VoyagerMediaPost'
+                $ref: '#/components/schemas/VoyagerPost'
         '400':
           description: Bad Request
         '500':
           description: Server error
-  /voyagers/v1/posts/{id}:
+  /v1/voyagers/posts/{id}:
     get:
       tags:
         - posts
-      summary: Load Voyager Media Post with caption and refs to media files
-      description: Method loads Voyager Media Post with caption and refs to media files by ID
+      summary: Load Voyager Post with caption and refs to media files
+      description: Method loads Voyager Post with caption and refs to media files by ID
       parameters:
         - name: id
           in: path
-          description: ID of Voyager Media Post
+          description: ID of Voyager Post
           required: true
           schema:
             type: integer
@@ -61,13 +62,13 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/VoyagerMediaPost'
+                $ref: '#/components/schemas/VoyagerPost'
         '400':
           description: Bad Request
         '500':
           description: Server error
 
-  /voyagers/v1/subscriptions:
+  /v1/voyagers/subscriptions:
     post:
       tags:
         - subscriptions
@@ -90,10 +91,10 @@ paths:
         '500':
           description: Server error
 
-  /voyagers/v1/subscriptions/{id}:
+  /v1/voyagers/subscriptions/{id}:
     delete:
       tags:
-        - subsrciptions
+        - subscriptions
       summary: Unsubscribe from Voyager
       description: Method Unsubscribes from Voyager
       parameters:
@@ -113,7 +114,7 @@ paths:
           description: Server error
 
 
-  /voyagers/v1/posts/feed/{voyager_id}:
+  /v1/voyagers/posts/feed/{voyager_id}:
     get:
       tags:
         - posts/feed
@@ -142,22 +143,22 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/VoyagerMediaPost'
+                  $ref: '#/components/schemas/VoyagerPost'
         '400':
           description: Bad Request
         '500':
           description: Server error
 
-  /voyagers/v1/posts/{id}/reactions:
+  /v1/voyagers/posts/{id}/reactions:
     post:
       tags:
         - posts/reactions
-      summary: Add reaction to Voyager Media Post
-      description: Method adds reaction to Voyager Media Post
+      summary: Add reaction to Voyager Post
+      description: Method adds reaction to Voyager Post
       parameters:
         - name: id
           in: path
-          description: ID of Voyager Media Post
+          description: ID of Voyager Post
           required: true
           schema:
             type: integer
@@ -166,29 +167,29 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/VoyagerMediaPostReaction'
+              $ref: '#/components/schemas/VoyagerPostReaction'
       responses:
         '200':
           description: Ok
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/VoyagerMediaPostReaction'
+                $ref: '#/components/schemas/VoyagerPostReaction'
         '400':
           description: Bad Request
         '500':
           description: Server error
 
-  /voyagers/v1/posts/{id}/reactions/summary:
+  /v1/voyagers/posts/{id}/reactions/summary:
     get:
       tags:
         - posts/reactions
-      summary: Get reactions summary related to Voyager Media Post
-      description: Method gets reactions summary related to Voyager Media Post
+      summary: Get reactions summary related to Voyager Post
+      description: Method gets reactions summary related to Voyager Post
       parameters:
         - name: id
           in: path
-          description: ID of Voyager Media Post
+          description: ID of Voyager Post
           required: true
           schema:
             type: integer
@@ -201,7 +202,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/VoyagerMediaPostReactionSummary'
+                  $ref: '#/components/schemas/VoyagerPostReactionSummary'
         '400':
           description: Bad Request
         '500':
@@ -209,16 +210,16 @@ paths:
 
 
 
-  /voyagers/v1/posts/{id}/comments:
+  /v1/voyagers/posts/{id}/comments:
     post:
       tags:
         - posts/comments
-      summary: Add comment to Voyager Media Post
-      description: Method adds comment to Voyager Media Post
+      summary: Add comment to Voyager Post
+      description: Method adds comment to Voyager Post
       parameters:
         - name: id
           in: path
-          description: ID of Voyager Media Post
+          description: ID of Voyager Post
           required: true
           schema:
             type: integer
@@ -227,14 +228,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/VoyagerMediaPostComment'
+              $ref: '#/components/schemas/VoyagerPostComment'
       responses:
         '200':
           description: Ok
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/VoyagerMediaPostComment'
+                $ref: '#/components/schemas/VoyagerPostComment'
         '400':
           description: Bad Request
         '500':
@@ -242,12 +243,12 @@ paths:
     get:
       tags:
         - posts/comments
-      summary: Get list of comments related to Voyager Media Post
-      description: Method gets lists of comments related to Voyager Media Post
+      summary: Get list of comments related to Voyager Post
+      description: Method gets lists of comments related to Voyager Post
       parameters:
         - name: id
           in: path
-          description: ID of Voyager Media Post
+          description: ID of Voyager Post
           required: true
           schema:
             type: integer
@@ -268,13 +269,13 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/VoyagerMediaPostComment'
+                  $ref: '#/components/schemas/VoyagerPostComment'
         '400':
           description: Bad Request
         '500':
           description: Server error
 
-  /voyagers/v1/assets:
+  /v1/voyagers/assets:
     post:
       tags:
         - assets
@@ -300,7 +301,7 @@ paths:
         '500':
           description: Server error
 
-  /voyagers/v1/assets/{id}:
+  /v1/voyagers/assets/{id}:
     get:
       tags:
         - assets
@@ -327,10 +328,76 @@ paths:
         '500':
           description: Server error
 
+  /v1/voyagers/places:
+    post:
+      tags:
+        - popular_places
+      summary: Retrieve the list of popular places
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PlacesSearchParams'
+      parameters:
+        - name: page
+          in: query
+          description: Pagination parameter to load feed in chunks
+          required: false
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Place'
+        '400':
+          description: Bad Request
+        '500':
+          description: Server error
+  /v1/voyagers/places/posts:
+    post:
+      tags:
+        - popular_places
+      summary: Retrieve the list of post for provided place
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Place'
+      parameters:
+        - name: page
+          in: query
+          description: Pagination parameter to load feed in chunks
+          required: false
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type:
+                    integer
+        '400':
+          description: Bad Request
+        '500':
+          description: Server error
+
 
 components:
   schemas:
-    VoyagerMediaPost:
+    VoyagerPost:
       type: object
       properties:
         id:
@@ -343,7 +410,7 @@ components:
           examples: [101]
         caption:
           type: string
-          examples: ["A short description to add context to images of media post"]
+          examples: ["A short description to add context to images of post"]
         imageIds:
           type: array
           items:
@@ -382,11 +449,11 @@ components:
           format: int64
           examples: [309]
 
-    VoyagerMediaPostReactionEnum:
+    VoyagerPostReactionEnum:
       type: string
       enum: [Like, Love, Curious, Celebrate, Insightful]
 
-    VoyagerMediaPostReaction:
+    VoyagerPostReaction:
       type: object
       properties:
         id:
@@ -402,18 +469,18 @@ components:
           format: int64
           examples: [309]
         reaction:
-          $ref: '#/components/schemas/VoyagerMediaPostReactionEnum'
+          $ref: '#/components/schemas/VoyagerPostReactionEnum'
 
-    VoyagerMediaPostReactionSummaryItem:
+    VoyagerPostReactionSummaryItem:
       type: object
       properties:
         reaction:
-          $ref: '#/components/schemas/VoyagerMediaPostReactionEnum'
+          $ref: '#/components/schemas/VoyagerPostReactionEnum'
         count:
           type: number
           format: int32
 
-    VoyagerMediaPostReactionSummary:
+    VoyagerPostReactionSummary:
       type: object
       properties:
         postId:
@@ -423,10 +490,10 @@ components:
         reactions:
           type: array
           items:
-            $ref: '#/components/schemas/VoyagerMediaPostReactionSummaryItem'
+            $ref: '#/components/schemas/VoyagerPostReactionSummaryItem'
 
 
-    VoyagerMediaPostComment:
+    VoyagerPostComment:
       type: object
       properties:
         id:
@@ -443,4 +510,38 @@ components:
           examples: [309]
         comment:
           type: string
-          examples: ["free-form text comment for media post"]
+          examples: ["free-form text comment for post"]
+    
+
+    PlacesSearchParams:
+      type: object
+      properties:
+        latitude:
+          type: number
+          format: double
+          examples: [34.0522]
+        longitude:
+          type: number
+          format: double
+          examples: [-118.2437]
+
+    Place:
+      type: object
+      properties:
+        place_id:
+          type: string
+          examples: ["ChIJgUbEo8cfqokR5lP9_Wh_DaM"]
+        place_id_provider:
+          type: string
+          examples: ["google", "2gis"]
+        place_name:
+          type: string
+          examples: ["Эйфелева башня"]
+        latitude:
+          type: number
+          format: double
+          examples: [34.0522]
+        longitude:
+          type: number
+          format: double
+          examples: [-118.2437]
