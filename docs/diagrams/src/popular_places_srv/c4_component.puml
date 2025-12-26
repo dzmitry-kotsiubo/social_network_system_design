@@ -1,0 +1,27 @@
+@startuml voyager_social_network_c4_context
+!include <C4/C4_Container>
+
+Person(user, "Voyager")
+Container(apiGateway, "API Gateway", "Nginx", "Entry Point to the System")
+ContainerQueue(postsCDC, "Posts CDC", "Kafka", "")
+Container(postsSrv, "Posts Service", "MicroService", "Manages posts")
+System_Ext(placesAPI, "Places API", "Google / 2GIS\nplaces api")
+
+
+
+System_Boundary(popularPlacesSystem, "Popular places subsystem") {
+    Container(popularPlacesSrv, "Popular Places Service", "MicroService", "Manages popular places")
+    ContainerDb(popularPlacesCache, "Popular places\nCache", "Redis Cluster", "")
+}
+
+Rel(user, apiGateway, "Manage user requests", "REST")
+Rel(apiGateway, popularPlacesSrv, "List Popular Places\nList posts for place ID")
+
+Rel(postsSrv, postsCDC, "List Popular Places\nList posts")
+Rel(popularPlacesSrv, postsCDC, "1 build popular places aggregates based on posts feed")
+Rel(popularPlacesSrv, placesAPI, "2 convert post's coordinates into places objects")
+Rel(popularPlacesSrv, popularPlacesCache, "3 store popular places aggregates")
+
+Rel(popularPlacesSrv, popularPlacesCache, "List Popular Places / List Posts for place ID")
+
+@enduml

@@ -120,6 +120,9 @@ _______
     - read (50 за раз): 15 000 000 DAU * 250 комментариев / 50 за раз / 24 ч / 60 м / 60 с = 750;
   Лента
     - read: 15 000 000 DAU * 30 постов в день / 24 ч / 60 м / 60 с = 15 * 30 * 10^6 / 10^5 = 4 500;
+  Популярные места
+    - read places: 15 000 000 DAU * 5 поисков в месяц / 30 / 24 ч / 60 м / 60 с = 2.5 * 10^6  / 10^5 = 25;  
+    - read place posts: 15 000 000 DAU * 50 постов в месяц / 30 / 24 ч / 60 м / 60 с = 25 * 10^6  / 10^5 = 250;  
  ```
 
 #### Драфт версия сущностей
@@ -160,6 +163,13 @@ _______
     - postId (8 B)
     - followerId (8 B)
     - comment (200 B * 2)
+
+    Place (240 B)
+    - id (24 B)
+    - name (200 B)
+    - latitude  (8 B)
+    - longitude  (8 B)
+    
 ```
 
 #### Throughput
@@ -176,9 +186,13 @@ _______
         - write: 750 RPS * 420 B = 750 * 0.5 * 10^3 = 375 kB/s
         - read: 750 RPS * 420 B * 50 ком. на странице = ~20 MB/s
     Лента
-        если [RPS ленты / RPS постов = 4 500 / 50 = ~ 100] тогда) 
+        если [RPS ленты / RPS постов = 4 500 / 50 = ~ 100] тогда 
         - read (сообщения): 60 kB/s * 100 = 6 MB/s
         - read (медиа): 500 MB/s * 100 = 50 GB/s 
+    Популярные места
+        - read (places): 25 RPS * 240 B * 25 (популярных мест на странице) = 15 000 B/s = 15 KB/s 
+        - read (place posts): 250 RPS * 1.2 kB * 25 (постов на странице) = 7 500 KB/s  = 7.5 MB/s 
+
 ```
 
 # Готовим карту
@@ -304,3 +318,24 @@ SSD (60 TB) = 5 дисков
 Hosts: 
  - 5 disks by hosts * (RF = 2) = 2 hosts
 ```
+
+# Архитектура
+
+### C4 Context
+
+![Context](docs/diagrams/out/c4_context.png)
+
+### Subscriptions Srv Componets
+![Context](docs/diagrams/out/subscriptions_srv/c4_context.png)
+
+### Posts Srv Componets
+![Context](docs/diagrams/out/posts_srv/c4_context.png)
+
+### Posts Reactions Srv Componets
+![Context](docs/diagrams/out/reactions_srv/c4_context.png)
+
+### Feeds Srv Componets
+![Context](docs/diagrams/out/feeds_srv/c4_context.png)
+
+### Popular Places Srv Componets
+![Context](docs/diagrams/out/popular_places_srv/c4_context.png)

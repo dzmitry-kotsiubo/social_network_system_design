@@ -1,0 +1,32 @@
+@startuml voyager_social_network_c4_context
+!include <C4/C4_Container>
+
+Person(user, "Voyager")
+Container(apiGateway, "API Gateway", "Nginx", "Entry Point to the System")
+Container(reactionsSrv, "Reactions Service", "MicroService", "Manages Reactions")
+Container(commentsSrv, "Comments Service", "MicroService", "Manages Comments")
+Container(feedsSrv, "Feeds Service", "MicroService", "Manages Post Feeds")
+
+
+
+System_Boundary(coreSystem, "Subscriptions subsystem") {
+    Container(subSrv, "Subscriptions Service", "MicroService", "Manages subsctiptions")
+    ContainerDb(subDBMaster, "Subscriptions DB Master", "PG", "")
+    ContainerDb(subDBSlave, "Subscriptions DB Slave", "PG", "")
+    ContainerDb(subCache, "Subscriptions Cache", "Redis Cluster", "")
+}
+
+Rel(user, apiGateway, "Manage user requests", "REST")
+Rel(apiGateway, subSrv, "Create/Delete sucsription", "REST")
+Rel(subSrv, subDBMaster, "write path", "")
+Rel(subSrv, subDBSlave, "read path", "")
+Rel(subDBMaster, subDBSlave, "repliacation path", "")
+
+
+Rel(reactionsSrv, subSrv, "Get subs list", "")
+Rel(commentsSrv, subSrv, "Get subs list", "")
+Rel(feedsSrv, subSrv, "Get subs list", "")
+Rel(subSrv, subCache, "Get subs list", "")
+
+
+@enduml

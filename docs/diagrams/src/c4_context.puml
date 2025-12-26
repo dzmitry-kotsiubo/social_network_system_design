@@ -1,0 +1,25 @@
+@startuml voyager_social_network_c4_context
+!include <C4/C4_Container>
+
+Person(user, "Voyager")
+Container(apiGateway, "API Gateway", "Nginx", "Entry Point to the System")
+Container(subscriptionSrv, "Subscription Service", "MicroService", "Manages subsctiptions")
+Container(postSrv, "Post Service", "MicroService", "Manages Posts")
+Container(reactionSrv, "Reaction Service", "MicroService", "Manages Reactions")
+Container(commentSrv, "Comment Service", "MicroService", "Manages Comments")
+Container(feedSrv, "Feed Service", "MicroService", "Manages Post Feeds")
+Container(popularPlacesSrv, "Search Service", "MicroService", "Manages Popular places search")
+
+System_Ext(s3, "Media Store", "External S3-compatible service provider")
+
+
+Rel(user, apiGateway, "Manages user requests", "REST")
+Rel(apiGateway, subscriptionSrv, "Create/Delete subscription", "REST")
+Rel(apiGateway, postSrv, "Pub/View single post", "REST")
+Rel(apiGateway, reactionSrv, "Add reaction\nGer reactions summary", "REST")
+Rel(apiGateway, commentSrv, "Add comment\nList comments", "REST")
+Rel(apiGateway, feedSrv, "Subsribe to posts feed", "WS")
+Rel(apiGateway, popularPlacesSrv, "Search posts from popular places", "WS")
+
+Rel(user, s3, "Load Post media assests", "")
+@enduml
